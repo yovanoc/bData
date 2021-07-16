@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "editorconfig.editorconfig",
+    "visualstudioexptteam.vscodeintellicode",
+    "arcanis.vscode-zipfs",
+    "prisma.prisma-insider"
+  ]
+}

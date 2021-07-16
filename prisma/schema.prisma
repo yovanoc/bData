@@ -1,0 +1,61 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator prisma_client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["nApi", "referentialActions"]
+}
+
+enum CandleInterval {
+  ONE_MINUTE
+  THREE_MINUTES
+  FIVE_MINUTES
+  FIFTEEN_MINUTES
+  THIRTY_MINUTES
+  ONE_HOUR
+  TWO_HOURS
+  FOUR_HOURS
+  SIX_HOURS
+  EIGHT_HOURS
+  TWELVE_HOURS
+  ONE_DAY
+  THREE_DAYS
+  ONE_WEEK
+  ONE_MONTH
+}
+
+model Symbol {
+  id      String   @id @default(cuid())
+  symbol  String   @unique
+  prices  Price[]
+  candles Candle[]
+}
+
+model Price {
+  id       String    @id @default(cuid())
+  symbol   Symbol    @relation(fields: [symbolId], references: [id])
+  symbolId String
+  date     DateTime  @default(now())
+  realDate DateTime?
+  price    Decimal
+}
+
+model Candle {
+  id               String         @id @default(cuid())
+  symbol           Symbol         @relation(fields: [symbolId], references: [id])
+  symbolId         String
+  interval         CandleInterval
+  openTime         DateTime
+  open             Decimal
+  high             Decimal
+  low              Decimal
+  close            Decimal
+  volume           Decimal
+  closeTime        DateTime
+  quoteVolume      Decimal
+  trades           Int
+  baseAssetVolume  Decimal
+  quoteAssetVolume Decimal
+}
