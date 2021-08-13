@@ -1,4 +1,4 @@
-import { startServer, stopServer } from "./api";
+import { startServer, stopServer } from "./api/index.js";
 
 const port = 4000;
 

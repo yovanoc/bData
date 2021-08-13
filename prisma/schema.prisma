@@ -3,9 +3,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator nexusPrisma {
+  provider = "nexus-prisma"
+}
+
 generator prisma_client {
   provider        = "prisma-client-js"
-  previewFeatures = ["nApi", "referentialActions"]
+  previewFeatures = ["nApi", "referentialActions", "interactiveTransactions", "namedConstraints"]
 }
 
 enum CandleInterval {

@@ -1,3 +1,3 @@
-export { default as Price } from "./Price";
-export { default as Candle } from "./Candle";
-export { default as Symbol } from "./Symbol";
+export { default as Price } from "./Price.js";
+export { default as Candle } from "./Candle.js";
+export { default as Symbol } from "./Symbol.js";

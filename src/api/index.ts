@@ -4,17 +4,17 @@ config({
   silent: true
 });
 
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "./prisma.js";
 import { ApolloServer } from "apollo-server-express";
 import type { Request } from "express";
-import * as express from "express";
-import { resolveSession } from "./context";
+import express from "express";
+import { resolveSession } from "./context.js";
 import type { IRateLimiterOptions } from "rate-limiter-flexible";
 import { RateLimiterMemory, RateLimiterQueue } from "rate-limiter-flexible";
 import { createServer } from "http";
-import { getServerStopFunc } from "../utils/serverStop";
-import * as Cors from "cors";
-import { schema } from "./schema";
+import { getServerStopFunc } from "../utils/serverStop.js";
+import Cors from "cors";
+import { schema } from "./schema.js";
 import { execute, subscribe } from "graphql";
 import { SubscriptionServer } from "subscriptions-transport-ws";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
@@ -57,8 +57,6 @@ const limiterFlexible = new RateLimiterMemory(limiterOptions);
 const limiter = new RateLimiterQueue(limiterFlexible, {
   maxQueueSize: 100
 });
-
-export const prisma = new PrismaClient();
 
 const apollo = new ApolloServer({
   introspection: true,

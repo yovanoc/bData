@@ -1,17 +1,19 @@
-import { DateTimeResolver } from "graphql-scalars";
-import {
-  asNexusMethod,
-  fieldAuthorizePlugin,
-  makeSchema,
-  queryComplexityPlugin
-} from "nexus";
-import { nexusSchemaPrisma } from "nexus-plugin-prisma/schema";
+import { fieldAuthorizePlugin, makeSchema, queryComplexityPlugin } from "nexus";
 import { join } from "node:path";
-import * as query from "../query/index";
-import * as mutation from "../mutation/index";
-import * as models from "../models/index";
+import * as query from "../query/index.js";
+import * as mutation from "../mutation/index.js";
+import * as models from "../models/index.js";
 import { nexusShield, allow } from "nexus-shield";
 import { ForbiddenError } from "apollo-server-express";
+import NexusPrisma from "nexus-prisma";
+import { enumType } from "nexus";
+import NexusPrismaScalars from "nexus-prisma/scalars.js";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
+
+const { CandleInterval } = NexusPrisma;
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const schema = makeSchema({
   shouldExitAfterGenerateArtifacts: Boolean(
@@ -32,10 +34,6 @@ export const schema = makeSchema({
     schema: join(__dirname, "../../api.graphql")
   },
   plugins: [
-    nexusSchemaPrisma({
-      experimentalCRUD: true,
-      prismaClient: ctx => ctx.prisma
-    }),
     nexusShield({
       defaultError: new ForbiddenError("Not allowed"),
       defaultRule: allow
@@ -43,5 +41,5 @@ export const schema = makeSchema({
     fieldAuthorizePlugin(),
     queryComplexityPlugin()
   ],
-  types: [asNexusMethod(DateTimeResolver, "date"), query, mutation, models]
+  types: [NexusPrismaScalars, enumType(CandleInterval), query, mutation, models]
 });

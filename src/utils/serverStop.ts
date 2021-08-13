@@ -1,5 +1,5 @@
-import type { Server, IncomingMessage, RequestListener } from "http";
-import type { Socket } from "net";
+import type { Server, IncomingMessage, RequestListener } from "node:http";
+import type { Socket } from "node:net";
 
 /**
  * Copyright 2020 Dashlane

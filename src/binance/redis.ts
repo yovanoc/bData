@@ -1,10 +1,10 @@
-import type { CandlesOptions } from "binance-api-node";
-import Binance, { CandleChartInterval } from "binance-api-node";
-import * as Redis from "ioredis";
+import type { CandlesOptions, Binance } from "binance-api-node";
+import BinanceDefault, { CandleChartInterval } from "binance-api-node";
+import Redis from "ioredis";
 import { Semaphore } from "redis-semaphore";
-import { getRoundedDate, ms } from "../utils/time";
-import { prisma } from "../api";
-import { candleIntervalToPrismaInterval } from "./intervals";
+import { getRoundedDate, ms } from "../utils/time.js";
+import { prisma } from "../api/prisma.js";
+import { candleIntervalToPrismaInterval } from "./intervals.js";
 
 const redis = new Redis({
   host: "212.47.234.146",
@@ -12,7 +12,8 @@ const redis = new Redis({
   password: "GLSy5FRGDGJc4hHzdInuyXJYz1WpyGV0"
 });
 
-const client = Binance();
+// TODO Hack esm...
+const client: Binance = (BinanceDefault as any).default();
 
 const roundDate = (date: Date): Date => getRoundedDate(date, 500);
 

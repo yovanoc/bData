@@ -1,5 +1,5 @@
 import { arg, nonNull, nullable, queryField, stringArg } from "nexus";
-import { getSymbolPrice } from "../binance/redis";
+import { getSymbolPrice } from "../binance/redis.js";
 
 export default queryField(t => {
   t.nullable.field("price", {

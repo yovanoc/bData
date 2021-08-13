@@ -1,1 +1,1 @@
-export { default as price } from "./price";
+export { default as price } from "./price.js";
